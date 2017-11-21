@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp6
+{
+    class Program
+    {
+
+        const double PI = 3.14f;      //先定义一个π
+        public class Round
+        {
+            private double result=0;         //初始化结果
+            public double Set_area(double R)         //计算面积
+            {
+                result = PI * R * R;
+                return result;             //返回结果
+            }
+
+            internal double Set_area()                //抛出错误
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            String make_choice;    //选择是否继续
+
+            Round[]round1 = new Round[100];           //一个新的数组类
+            int i = 0;
+            double R=0;                 //初始化半径
+            int times = 0;
+            double Last_result=0;
+            String way;                   //这里定义为字符串类型就是防止错误输入其他的字母或符号(包括回车键，这比我用的c方便多，因为c没有字符串类型的数据）
+            do {                           //循环执行
+
+            Console.WriteLine("Enter what you need:\n1.To calcute an area of a round; \n2.To show the last result.");
+            way = Convert.ToString(Console.ReadLine());
+
+                round1[i] = new Round();
+
+                switch (way)           //选择
+                {
+                    case "1":
+                        Console.WriteLine("Enter a radius of a round:");
+                        R = Convert.ToDouble(Console.ReadLine());         //读取半径
+                        Last_result=round1[i].Set_area(R);            //调用类
+                        i++;
+                        Console.WriteLine("The area of the round:Result" + i + "\n" + Last_result);
+                        break;
+
+                    case "2":
+                        Console.WriteLine("Choose the result you want to know:");        //选择需要显示的结果
+                        times = Convert.ToInt16(Console.ReadLine());
+                        times--;
+                        if (times>=i)
+                        {
+                            Console.WriteLine("Result doesn't exit!");            //如果输入的次数超过了现有数组元素数，则报错
+                            break;
+                        }
+                        if (round1[times].Set_area(R) == 0)           //判断是否是初始化的结果
+                        {
+                            Console.WriteLine("No last result!");
+                            break;
+                        }
+                        Console.WriteLine("The last result is:");
+                        Console.WriteLine(Last_result);
+                        break;
+
+                    default:
+                        Console.WriteLine("Format error!");        //什么也不是，格式错误
+                        break;
+                }
+                Console.WriteLine("Continue?");                      //选择是否继续
+                make_choice = Convert.ToString(Console.ReadLine());
+
+            } while (make_choice == "y" || make_choice == "Y");         //判断
+
+            Console.WriteLine("The end.");             //结束
+            Console.ReadKey();
+
+        }
+    }
+}
